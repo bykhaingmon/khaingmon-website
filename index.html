@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khaing Mon — The Shop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=Public+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F5F0D8;            /* cream */
+      --paper:     #F5F0D8;            /* cream nav/cards */
+      --paper-2:   #EDE6C4;            /* slightly deeper cream */
+      --ink:       #1A0A05;            /* dark chocolate */
+      --ink-soft:  #3A1E12;            /* warm brown */
+      --muted:     #7A6E58;            /* warm grey-brown */
+      --rule:      #D4C8A0;            /* warm tan rule */
+      --rule-soft: #E0D8B8;            /* soft cream rule */
+      --accent:    #B83020;            /* terracotta red */
+      --accent-d:  #8E2218;            /* deeper terracotta */
+      --tag:       #1A0A05;
+      --sale:      #B83020;            /* terracotta */
+      --ok:        #4A8A72;            /* teal */
+
+      /* Category swatch colors */
+      --sw-now:    #1A0A05;            /* dark chocolate */
+      --sw-before: #B83020;            /* terracotta */
+      --sw-school: #4A6E88;            /* powder blue */
+      --sw-aside:  #7A7020;            /* olive */
+
+      --serif: 'Newsreader', Georgia, serif;
+      --sans:  'Public Sans', system-ui, sans-serif;
+      --mono:  'JetBrains Mono', ui-monospace, monospace;
+
+      --shadow-card: 0 1px 0 var(--rule);
+      --shadow-pop:  0 22px 40px -16px rgba(26,10,5,0.18), 0 2px 6px rgba(26,10,5,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 400;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .mono-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ─────────────── ANNOUNCEMENT BAR ─────────────── */
+    .announce {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 9px 24px;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .announce-track {
+      display: inline-flex;
+      gap: 48px;
+      white-space: nowrap;
+      animation: marquee 36s linear infinite;
+    }
+    .announce-track span::before {
+      content: '◇';
+      margin-right: 14px;
+      color: var(--accent);
+      opacity: 0.7;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─────────────── TOP NAV ─────────────── */
+    .topnav {
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+    .topnav-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 22px 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .nav-left {
+      display: flex;
+      gap: 28px;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .nav-left a { color: var(--ink); transition: color 0.2s; }
+    .nav-left a:hover { color: var(--accent); }
+    .nav-left a.is-active { color: var(--accent); }
+
+    .brand {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.6rem;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      text-align: center;
+      line-height: 1;
+    }
+    .brand-sub {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+      font-weight: 400;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 24px;
+      justify-content: flex-end;
+      align-items: center;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .nav-right .icon-btn {
+      background: none;
+      border: none;
+      color: var(--ink);
+      cursor: pointer;
+      padding: 4px 0;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+    .nav-right .icon-btn:hover { color: var(--accent); }
+    .bag-count {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 2px 6px;
+      border-radius: 99px;
+      min-width: 22px;
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+    .available-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .available-dot::before {
+      content: '';
+      width: 7px; height: 7px;
+      background: var(--ok);
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 color-mix(in oklch, var(--ok) 70%, transparent);
+      animation: pulse 2.4s ease-out infinite;
+    }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 color-mix(in oklch, var(--ok) 70%, transparent); }
+      70%  { box-shadow: 0 0 0 10px color-mix(in oklch, var(--ok) 0%, transparent); }
+      100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--ok) 0%, transparent); }
+    }
+
+    /* ─────────────── CATEGORY SUBNAV ─────────────── */
+    .subnav {
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+    }
+    .subnav-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 14px 40px;
+      display: flex;
+      justify-content: center;
+      gap: 36px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .subnav-inner button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      padding: 4px 0;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .subnav-inner button:hover { color: var(--ink); }
+    .subnav-inner button.is-active {
+      color: var(--ink);
+      border-bottom-color: var(--accent);
+    }
+    .subnav-inner .count {
+      color: var(--muted);
+      opacity: 0.5;
+      margin-left: 6px;
+      font-size: 0.6rem;
+    }
+
+    /* ─────────────── HERO ─────────────── */
+    .hero {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 36px 40px 28px;
+      display: grid;
+      grid-template-columns: 0.5fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .hero-left h1 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(48px, 6.5vw, 96px);
+      line-height: 0.96;
+      letter-spacing: -0.028em;
+      color: var(--ink);
+      text-wrap: balance;
+    }
+    .hero-left h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-left .eyebrow {
+      margin-bottom: 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-left .eyebrow::before, .hero-left .eyebrow::after {
+      content: '';
+      display: inline-block;
+      width: 22px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .hero-photo {
+      width: 100%;
+      height: 380px;
+      object-fit: contain;
+      object-position: center top;
+      display: block;
+      border-radius: 2px;
+      background: var(--paper-2);
+    }
+
+    .hero-meta {
+      margin-top: 16px;
+      display: flex;
+      gap: 36px;
+      flex-wrap: wrap;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .hero-meta span strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .hero-right {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      text-wrap: pretty;
+      padding: 0 48px;
+    }
+    .hero-right h3 {
+      font-family: var(--mono);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .hero-right p {
+      font-family: var(--serif);
+      font-size: 0.92rem;
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    .hero-right p + p { margin-top: 12px; }
+    .hero-right em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    /* ─────────────── FILTER BAR ─────────────── */
+    .filterbar {
+      background: #B8AD88;
+      padding: 14px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .filterbar .left,
+    .filterbar .right {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+    .filterbar .left button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      color: var(--ink-soft);
+      padding: 4px 0;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .filterbar .left button:hover { color: var(--ink); }
+    .filterbar .left button.is-active {
+      color: var(--ink);
+      border-bottom-color: var(--accent);
+    }
+    .filterbar .right select {
+      background: transparent;
+      border: none;
+      color: var(--ink);
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      cursor: pointer;
+      padding-right: 18px;
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+                        linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+      background-position: calc(100% - 6px) 50%, calc(100% - 2px) 50%;
+      background-size: 4px 4px;
+      background-repeat: no-repeat;
+    }
+    .filterbar .count strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .filterbar .view-toggle {
+      display: flex;
+      border: 1px solid rgba(26,10,5,0.2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .filterbar .view-toggle button {
+      background: transparent;
+      border: none;
+      color: var(--ink-soft);
+      padding: 6px 10px;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      cursor: pointer;
+    }
+    .filterbar .view-toggle button.active {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    /* ─────────────── SHOP ZONE (stripe band) ─────────────── */
+    .shop-zone {
+      background: var(--bg);
+      padding-bottom: 48px;
+    }
+
+    /* ─────────────── PRODUCT GRID ─────────────── */
+    .grid-shell {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 32px 40px 0;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px 32px;
+    }
+    .grid.view-list {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .card {
+      position: relative;
+      cursor: default;
+      transition: opacity 0.3s;
+    }
+    .card.is-hidden { display: none; }
+
+    .card-image {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      background: var(--paper-2);
+      overflow: hidden;
+      margin-bottom: 16px;
+      transition: transform 0.4s ease;
+    }
+    .card-image .swatch {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+    }
+    .card-image .swatch.alt {
+      opacity: 0;
+    }
+    .card:hover .card-image .swatch:not(.alt) { opacity: 0; }
+    .card:hover .card-image .swatch.alt        { opacity: 1; }
+
+    /* Custom illustration layer */
+    .card-scene {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      transition: opacity 0.4s ease;
+    }
+    .card:hover .card-scene { opacity: 0; }
+
+    /* Swatch backgrounds — striped paper-y placeholders */
+    .swatch[data-tone="now"]    { background:
+      repeating-linear-gradient(45deg, var(--sw-now) 0 28px, color-mix(in oklch, var(--sw-now) 88%, white) 28px 56px); }
+    .swatch[data-tone="before"] { background:
+      repeating-linear-gradient(45deg, var(--sw-before) 0 28px, color-mix(in oklch, var(--sw-before) 88%, white) 28px 56px); }
+    .swatch[data-tone="school"] { background:
+      repeating-linear-gradient(45deg, var(--sw-school) 0 28px, color-mix(in oklch, var(--sw-school) 88%, white) 28px 56px); }
+    .swatch[data-tone="aside"]  { background:
+      repeating-linear-gradient(45deg, var(--sw-aside) 0 28px, color-mix(in oklch, var(--sw-aside) 88%, white) 28px 56px); }
+    .swatch[data-tone="alt"]    { background: var(--paper); }
+
+    .swatch-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      background: rgba(0,0,0,0.18);
+      padding: 6px 10px;
+      backdrop-filter: blur(2px);
+    }
+    .swatch.alt .swatch-label {
+      color: var(--ink);
+      background: transparent;
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.4rem;
+      letter-spacing: -0.01em;
+      text-transform: none;
+      text-align: center;
+      padding: 24px;
+      line-height: 1.3;
+      max-width: 80%;
+    }
+
+    /* Card badges */
+    .card-badges {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+      z-index: 2;
+    }
+    .badge {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: 2px;
+    }
+    .badge.new    { background: var(--sale); color: var(--paper); }
+    .badge.bestseller { background: var(--ink); color: var(--paper); }
+    .badge.archive    { background: var(--paper); color: var(--ink); border: 1px solid var(--rule); }
+    .badge.featured   { background: var(--accent); color: var(--paper); }
+
+    /* Save (heart-equivalent) button */
+    .card-save {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink);
+      transition: background 0.2s, color 0.2s;
+      z-index: 2;
+      font-size: 0.95rem;
+    }
+    .card-save:hover { background: var(--ink); color: var(--paper); }
+    .card-save.saved { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+
+    /* Quick-add bar that slides up on hover */
+    .quick-add {
+      position: absolute;
+      left: 12px; right: 12px;
+      bottom: 12px;
+      background: var(--paper);
+      color: var(--ink);
+      padding: 10px 14px;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s, background 0.2s, color 0.2s;
+      z-index: 2;
+    }
+    .card:hover .quick-add {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .quick-add:hover { background: var(--ink); color: var(--paper); }
+
+    .card-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .card-row1 {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 14px;
+    }
+    .card-name {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-style: italic;
+      font-size: 1.25rem;
+      letter-spacing: -0.012em;
+      color: var(--ink);
+      line-height: 1.15;
+    }
+    .card-price {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      white-space: nowrap;
+      font-weight: 500;
+    }
+    .card-meta {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .card-meta .sep { opacity: 0.5; margin: 0 6px; }
+    .card-colors {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .card-color {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      border: 1px solid var(--rule);
+    }
+
+    /* List view variant */
+    .grid.view-list .card {
+      display: grid;
+      grid-template-columns: 220px 1fr 200px;
+      gap: 36px;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .grid.view-list .card-image { margin-bottom: 0; aspect-ratio: 5 / 4; }
+    .grid.view-list .quick-add { position: static; opacity: 1; transform: none; background: transparent; color: var(--ink); border: 1px solid var(--rule); padding: 12px; }
+    .grid.view-list .quick-add:hover { background: var(--ink); color: var(--paper); }
+    .grid.view-list .card-info { gap: 8px; }
+    .grid.view-list .card-name { font-size: 1.5rem; }
+
+    /* ─────────────── EDITORIAL CARE GUIDE ─────────────── */
+    .care-strip {
+      background: #A8C4D4;
+      border-top: none;
+      border-bottom: none;
+      padding: 16px 40px;
+    }
+    .care-inline {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: baseline;
+      gap: 40px;
+      flex-wrap: nowrap;
+    }
+    .care-title-group {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+    .care-title {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(20px, 2.4vw, 32px);
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .care-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .care-intro {
+      font-family: var(--serif);
+      font-size: 0.88rem;
+      font-style: italic;
+      color: var(--ink-soft);
+    }
+    .care-defs {
+      display: flex;
+      gap: 32px;
+      flex-wrap: nowrap;
+      align-items: baseline;
+    }
+    .care-def {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .care-def strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .care-symbol {
+      font-size: 1rem;
+      line-height: 1;
+      color: var(--accent);
+    }
+
+    /* ─────────────── NEWSLETTER ─────────────── */
+    .newsletter {
+      background-color: #B8AD88;
+      background-image: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 36px,
+        #A8C4D4 36px,
+        #A8C4D4 64px
+      );
+      padding: 28px 40px;
+      text-align: center;
+    }
+    .newsletter-inner {
+      max-width: 560px;
+      margin: 0 auto;
+      background: var(--paper);
+      padding: 28px 36px;
+    }
+    .newsletter .eyebrow {
+      display: inline-flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .newsletter .eyebrow::before, .newsletter .eyebrow::after {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+    .newsletter h2 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(26px, 3.3vw, 48px);
+      letter-spacing: -0.026em;
+      color: var(--ink);
+      margin-bottom: 12px;
+      text-wrap: balance;
+    }
+    .newsletter h2 em { font-style: italic; color: var(--accent); }
+    .newsletter p {
+      max-width: 50ch;
+      margin: 0 auto 22px;
+      color: var(--muted);
+      font-family: var(--serif);
+      font-size: 0.95rem;
+    }
+    .news-form {
+      max-width: 460px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .news-form .field {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--ink);
+    }
+    .news-form .field.message-field {
+      align-items: flex-start;
+      border-bottom: 1px solid var(--ink);
+    }
+    .news-form input,
+    .news-form textarea {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 12px 8px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--ink);
+      outline: none;
+      resize: none;
+    }
+    .news-form textarea {
+      min-height: 60px;
+      line-height: 1.5;
+    }
+    .news-form input::placeholder,
+    .news-form textarea::placeholder { color: var(--muted); font-style: italic; }
+    .news-form .field-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 12px 8px 12px 0;
+      flex-shrink: 0;
+    }
+    .news-form .field.message-field .field-label {
+      padding-top: 14px;
+    }
+    .news-form button {
+      margin-top: 20px;
+      align-self: flex-end;
+      background: none;
+      border: none;
+      color: var(--ink);
+      cursor: pointer;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 0;
+      transition: color 0.2s;
+    }
+    .news-form button:hover { color: var(--accent); }
+
+    /* ─────────────── FOOTER ─────────────── */
+    .site-footer {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 20px 40px;
+    }
+    .footer-bottom {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(244,239,230,0.45);
+    }
+    .footer-links {
+      display: flex;
+      gap: 28px;
+    }
+    .footer-links a {
+      color: rgba(244,239,230,0.65);
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--paper); }
+
+    /* ─────────────── DRAWER (PDP) ─────────────── */
+    .drawer-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(26,22,18,0.45);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s;
+      z-index: 200;
+    }
+    .drawer-backdrop.open { opacity: 1; pointer-events: auto; }
+
+    .drawer {
+      position: fixed;
+      top: 0; right: 0;
+      bottom: 0;
+      width: min(620px, 96vw);
+      background: var(--paper);
+      transform: translateX(100%);
+      transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1);
+      z-index: 210;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -32px 0 60px rgba(26,22,18,0.18);
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--rule);
+      flex-shrink: 0;
+    }
+    .drawer-crumbs {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .drawer-crumbs strong { color: var(--ink); font-weight: 500; }
+    .drawer-close {
+      background: none;
+      border: 1px solid var(--rule);
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      color: var(--ink);
+      font-size: 1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .drawer-close:hover { background: var(--ink); color: var(--paper); }
+
+    .drawer-scroll {
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .drawer-image {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      max-height: 460px;
+      position: relative;
+    }
+    .drawer-image .swatch {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .drawer-body {
+      padding: 36px 40px 24px;
+    }
+    .drawer-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .drawer-title {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(34px, 4.4vw, 50px);
+      line-height: 0.98;
+      letter-spacing: -0.026em;
+      color: var(--ink);
+      margin-bottom: 10px;
+      text-wrap: balance;
+    }
+    .drawer-title em { font-style: italic; color: var(--accent); }
+    .drawer-role {
+      font-family: var(--sans);
+      font-size: 0.86rem;
+      letter-spacing: 0.06em;
+      color: var(--ink-soft);
+      margin-bottom: 20px;
+    }
+    .drawer-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 28px;
+    }
+    .drawer-price {
+      font-family: var(--mono);
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .drawer-stock {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ok);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .drawer-stock::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--ok);
+      border-radius: 50%;
+    }
+    .drawer-body p.lede {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin-bottom: 24px;
+      text-wrap: pretty;
+    }
+    .drawer-body p.lede em { font-style: italic; color: var(--accent); }
+
+    /* Specs accordion-ish */
+    .spec-block {
+      border-top: 1px solid var(--rule);
+      padding: 18px 0;
+    }
+    .spec-block:last-of-type { border-bottom: 1px solid var(--rule); }
+    .spec-block h4 {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 12px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .spec-sym {
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px 24px;
+    }
+    .spec-grid dt {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .spec-grid dd {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--ink);
+      margin-top: 2px;
+    }
+    .composition-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .comp-chip {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      padding: 6px 10px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+    }
+    .care-symbols {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .care-sym {
+      width: 38px; height: 38px;
+      border: 1px solid var(--rule);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink);
+      background: var(--paper-2);
+    }
+    .care-text {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+
+    .drawer-cta {
+      position: sticky;
+      bottom: 0;
+      background: var(--paper);
+      padding: 16px 40px 24px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      gap: 10px;
+    }
+    .btn {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding: 14px 18px;
+      border: 1px solid var(--ink);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      flex: 1;
+      text-align: center;
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .btn:hover { background: var(--accent); border-color: var(--accent); }
+    .btn.secondary {
+      background: transparent;
+      color: var(--ink);
+      flex: 0 0 auto;
+      padding: 14px 18px;
+    }
+    .btn.secondary:hover { background: var(--ink); color: var(--paper); }
+
+    /* ─────────────── INQUIRY BAG DRAWER ─────────────── */
+    .bag {
+      position: fixed;
+      top: 0; right: 0;
+      bottom: 0;
+      width: min(460px, 96vw);
+      background: var(--paper);
+      transform: translateX(100%);
+      transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1);
+      z-index: 220;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -32px 0 60px rgba(26,22,18,0.18);
+    }
+    .bag.open { transform: translateX(0); }
+    .bag-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .bag-head h3 {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.4rem;
+      color: var(--ink);
+    }
+    .bag-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 28px;
+    }
+    .bag-item {
+      display: grid;
+      grid-template-columns: 64px 1fr auto;
+      gap: 14px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--rule-soft);
+      align-items: center;
+    }
+    .bag-thumb {
+      width: 64px; height: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .bag-thumb .swatch { position: absolute; inset: 0; }
+    .bag-item-name {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .bag-item-meta {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .bag-item-remove {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .bag-item-remove:hover { color: var(--ink); }
+
+    .bag-empty {
+      padding: 64px 28px;
+      text-align: center;
+      color: var(--muted);
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.05rem;
+    }
+    .bag-foot {
+      padding: 22px 28px 28px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .bag-foot .note {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--ink);
+      color: var(--paper);
+      padding: 14px 22px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 250;
+      border-radius: 2px;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .toast strong { color: var(--accent); font-weight: 500; }
+
+    /* ─────────────── RESPONSIVE ─────────────── */
+    @media (max-width: 1100px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      .care-defs { gap: 20px; }
+      .hero { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 720px) {
+      .topnav-inner { grid-template-columns: 1fr auto 1fr; padding: 18px 20px; gap: 12px; }
+      .nav-left, .nav-right { font-size: 0.7rem; gap: 14px; }
+      .nav-left a:not(:first-child) { display: none; }
+      .nav-right .available-dot { display: none; }
+      .subnav-inner { gap: 18px; font-size: 0.6rem; padding: 12px 16px; }
+      .hero { padding: 48px 20px 32px; }
+      .filterbar { padding: 12px 20px; }
+      .grid-shell { padding: 24px 20px 0; }
+      .grid { grid-template-columns: 1fr; gap: 36px; }
+      .care-strip { padding: 24px 20px; margin-top: 0; }
+      .care-inline { gap: 16px; }
+      .care-defs { gap: 14px; flex-direction: column; align-items: flex-start; }
+      .newsletter { padding: 24px 20px; }
+      .site-footer { padding: 48px 20px 24px; }
+      .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+      .drawer-body { padding: 28px 24px 16px; }
+      .drawer-cta { padding: 14px 24px 20px; }
+      .bag-scroll { padding: 8px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT MARQUEE -->
+<div class="announce">
+  <div class="announce-track">
+    <span>Product Strategy</span>
+    <span>Python</span>
+    <span>User Research</span>
+    <span>SQL</span>
+    <span>Go-to-Market</span>
+    <span>Claude Code</span>
+    <span>Prototyping</span>
+    <span>Snowflake</span>
+    <span>A/B Testing</span>
+    <span>Figma</span>
+    <span>Data Migration</span>
+    <span>React</span>
+    <span>JIRA</span>
+    <span>Gemini</span>
+    <span>Product Strategy</span>
+    <span>Python</span>
+    <span>User Research</span>
+    <span>SQL</span>
+    <span>Go-to-Market</span>
+    <span>Claude Code</span>
+    <span>Prototyping</span>
+    <span>Snowflake</span>
+    <span>A/B Testing</span>
+    <span>Figma</span>
+    <span>Data Migration</span>
+    <span>React</span>
+    <span>JIRA</span>
+    <span>Gemini</span>
+  </div>
+</div>
+
+<!-- TOP NAV -->
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="#" class="brand">
+      Khaing Mon
+      <span class="brand-sub">Product Manager in NYC</span>
+    </a>
+  </div>
+</header>
+
+<!-- SHOP ZONE: stripe background wraps filter bar + grid -->
+<div class="shop-zone" id="shop">
+
+  <!-- FILTER / SORT BAR -->
+  <div class="filterbar">
+    <div class="left" id="subnav">
+      <button class="is-active" data-cat="now">Now</button>
+      <button data-cat="before">Before</button>
+      <button data-cat="school">School</button>
+      <button data-cat="aside">Aside</button>
+    </div>
+    <div class="right">
+      <label for="sortby">Sort by</label>
+      <select id="sortby">
+        <option value="featured">Featured</option>
+        <option value="newest">Newest First</option>
+        <option value="oldest">Archive First</option>
+        <option value="impact">Most Impact</option>
+      </select>
+      <div class="view-toggle" id="view-toggle">
+        <button data-view="grid" class="active">Grid</button>
+        <button data-view="list">List</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT GRID -->
+  <section class="grid-shell">
+    <div class="grid" id="grid">
+      <!-- Cards injected by JS -->
+    </div>
+  </section>
+
+</div><!-- /.shop-zone -->
+
+<!-- EDITORIAL CARE GUIDE -->
+<section class="care-strip" id="care" data-screen-label="Care Guide">
+  <div class="care-inline">
+    <div class="care-title-group">
+      <h2 class="care-title">The <em>Care Guide.</em></h2>
+      <p class="care-intro">Three labels on every piece.</p>
+    </div>
+    <div class="care-defs">
+      <span class="care-def"><span class="care-symbol">✿</span> <strong>Composition</strong> — tools, methods, disciplines</span>
+      <span class="care-def"><span class="care-symbol">✦</span> <strong>Specifications</strong> — team size, format, location, timeframe</span>
+      <span class="care-def"><span class="care-symbol">♥</span> <strong>Care</strong> — what making it taught me</span>
+    </div>
+  </div>
+</section>
+
+<!-- HERO / ABOUT -->
+<section class="hero" data-screen-label="Hero">
+  <div class="hero-left">
+    <img src="khaing.jpg" alt="Khaing Mon" class="hero-photo" />
+    <div class="hero-meta">
+      <span><strong>Originally from</strong> Myanmar</span>
+<span><strong>4</strong> Categories</span>
+    </div>
+  </div>
+  <div class="hero-right" id="about">
+    <h3>About</h3>
+    <p>I'm Khaing, a Product Manager at Capital One, where I'm currently building <em>Notebooks</em> — an internal ML platform used by 11,000+ engineers across the enterprise. It's my second rotation in Capital One's Product Rotation Program, and the work sits at the intersection of developer tooling, machine learning, and user experience.</p>
+    <p>Before this, I worked on Capital One's ERP replacement, spent a summer at Gemini building crypto credit card promotions, and did research across educational design and neuroscience — including VR learning environments for refugee camps. I've also taught over 150 students as a TA at Stanford. I've always gone where I could grow the most, toward products that have real impact.</p>
+    <p>I studied Symbolic Systems at Stanford, an interdisciplinary major combining linguistics, neuroscience, and computer science, and went on to get my Master's in Artificial Intelligence there too. Interdisciplinary isn't new for me. The products I care most about are the ones that don't fit cleanly into one box — technology, learning, and design pulled together into something that changes how people work.</p>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter" id="contact" data-screen-label="Contact">
+  <div class="newsletter-inner">
+    <span class="mono-eyebrow eyebrow">Stay in touch</span>
+    <h2>Write me a <em>note</em>.</h2>
+    <p>I read everything! Whether you want to learn more about my experiences, chat about ML platforms, or just liked something here — drop a line.</p>
+    <form class="news-form" onsubmit="event.preventDefault(); showToast('Thank you — note received.');">
+      <div class="field">
+        <span class="field-label">From</span>
+        <input type="email" placeholder="your@email.com" aria-label="Email address" required />
+      </div>
+      <div class="field message-field">
+        <span class="field-label">Note</span>
+        <textarea placeholder="Say hello…" aria-label="Your message" rows="4"></textarea>
+      </div>
+      <button type="submit">Send →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-bottom">
+    <span>© Khaing Mon · 2026</span>
+    <div class="footer-links">
+      <a href="mailto:bykhaingmon@gmail.com">Email</a>
+      <a href="https://linkedin.com/in/khaingmon/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<!-- DRAWER (PDP) -->
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <span class="drawer-crumbs" id="drawer-crumbs">Shop / <strong>Piece</strong></span>
+    <button class="drawer-close" id="drawer-close" aria-label="Close">✕</button>
+  </div>
+  <div class="drawer-scroll" id="drawer-scroll">
+    <!-- injected -->
+  </div>
+  <div class="drawer-cta" id="drawer-cta">
+    <button class="btn secondary" id="drawer-save" aria-label="Save piece">♡ Save</button>
+  </div>
+</aside>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ─────────────────────────────────────────────────────────────
+  //  ILLUSTRATIONS
+  // ─────────────────────────────────────────────────────────────
+  const NOTEBOOK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" style="width:100%;height:100%;display:block;">
+  <defs>
+    <pattern id="nb-stripe" patternUnits="userSpaceOnUse" width="56" height="56" patternTransform="rotate(45)">
+      <rect width="28" height="56" fill="#1A0A05"/>
+      <rect x="28" width="28" height="56" fill="#2d1710"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="500" fill="url(#nb-stripe)"/>
+  <image href="jupyter-final.png" x="20" y="60" width="360" height="380" preserveAspectRatio="xMidYMid meet"/>
+</svg>`;
+
+  const STENCIL_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" style="width:100%;height:100%;display:block;">
+  <defs>
+    <pattern id="st-stripe" patternUnits="userSpaceOnUse" width="56" height="56" patternTransform="rotate(45)">
+      <rect width="28" height="56" fill="#1A0A05"/>
+      <rect x="28" width="28" height="56" fill="#2d1710"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="500" fill="url(#st-stripe)"/>
+  <image href="stencil-final.png" x="20" y="60" width="360" height="380" preserveAspectRatio="xMidYMid meet"/>
+</svg>`;
+
+  const MIGRATIONS_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" style="width:100%;height:100%;display:block;">
+  <defs>
+    <pattern id="mg-stripe" patternUnits="userSpaceOnUse" width="56" height="56" patternTransform="rotate(45)">
+      <rect width="28" height="56" fill="#1A0A05"/>
+      <rect x="28" width="28" height="56" fill="#2d1710"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="500" fill="url(#mg-stripe)"/>
+  <image href="github-final.png" x="20" y="60" width="360" height="380" preserveAspectRatio="xMidYMid meet"/>
+</svg>`;
+
+  const WORKDAY_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" style="width:100%;height:100%;display:block;">
+  <defs>
+    <pattern id="wd-stripe" patternUnits="userSpaceOnUse" width="56" height="56" patternTransform="rotate(45)">
+      <rect width="28" height="56" fill="#B83020"/>
+      <rect x="28" width="28" height="56" fill="#9e2818"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="500" fill="url(#wd-stripe)"/>
+  <image href="wd-final.png" x="20" y="60" width="360" height="380" preserveAspectRatio="xMidYMid meet"/>
+</svg>`;
+
+  const GEMINI_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" style="width:100%;height:100%;display:block;">
+  <defs>
+    <pattern id="gem-stripe" patternUnits="userSpaceOnUse" width="56" height="56" patternTransform="rotate(45)">
+      <rect width="28" height="56" fill="#B83020"/>
+      <rect x="28" width="28" height="56" fill="#9e2818"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="500" fill="url(#gem-stripe)"/>
+  <image href="gem-final.png" x="20" y="60" width="360" height="380" preserveAspectRatio="xMidYMid meet"/>
+</svg>`;
+
+  // ─────────────────────────────────────────────────────────────
+  //  THE CATALOG
+  // ─────────────────────────────────────────────────────────────
+  const catalog = [
+    {
+      id: 'notebooks-coat',
+      name: 'Enterprise Model Platforms: Notebooks',
+      altLine: 'Day-to-day PM for the platform 11,000+ internal users rely on.',
+      cat: 'now', catLabel: 'Now',
+      role: 'Sr. Associate PM · Enterprise ML Platform · Capital One',
+      season: 'Aug 2025 — Present',
+      price: '<span class="available-dot">Live</span>',
+      badge: { label: 'Featured', cls: 'featured' },
+      featured: 100,
+      year: 2025,
+      summary: "Notebooks is the internal ML platform Capital One's data scientists and ML engineers use to prototype, schedule, and ship models. I handle the day-to-day — keeping the roadmap sharp, running user interviews, and making sure the product keeps moving. Rebuilt onboarding from the ground up, launched a video library now used daily, and helped drive the platform from <em>7,000 to 11,000+</em> users.",
+      composition: ['Product Strategy', 'ML Platforms', 'User Research', 'User Interviews', 'Prototyping', 'Python', 'PRDs', 'Go-to-Market', 'Claude Code'],
+      fit: 'Cross-functional, ~12 engineers',
+      madeIn: 'New York',
+      material: 'Internal ML platform',
+      stock: '',
+      imgHtml: NOTEBOOK_SVG,
+      care: 'Be customer obsessed — learn user patterns and do regular user interviews to understand needs. You cannot build the right product without properly understanding who your users are.',
+    },
+    {
+      id: 'stencil',
+      name: 'Stencil',
+      altLine: 'Turn your notebook scripts into a repeatable recurring job.',
+      cat: 'now', catLabel: 'Now',
+      role: '0→1 Launch · Notebooks · Capital One',
+      season: '2026',
+      price: '<span class="available-dot">Live</span>',
+      badge: null,
+      featured: 95,
+      year: 2026,
+      summary: "Stencil is a 0→1 custom-built JupyterLab Extension I led from research through GA. It lets engineers test their scripts locally before they're pushed out as scheduled jobs — closing the loop between a Python notebook and production. As the sole PM, I led user interviews, prototyping, open beta, and launch.",
+      composition: ['0→1 Feature', 'Developer Tooling', 'User Research', 'Prototyping', 'Go-to-Market', 'Snowflake'],
+      fit: 'PM-of-one, 4 engineers',
+      madeIn: 'New York',
+      material: 'Custom Built Extension',
+      stock: '',
+      imgHtml: STENCIL_SVG,
+      care: 'New features should meaningfully shift how engineers work — not just add surface area. Before building, do the research to validate whether your idea can actually land with impact. A well-scoped, well-evidenced bet will always outlast a hurried launch.',
+    },
+    {
+      id: 'spark-pilot',
+      name: 'Platform Migrations',
+      altLine: '4 concurrent migrations',
+      cat: 'now', catLabel: 'Now',
+      role: 'Migration PM · Capital One',
+      season: '2026',
+      price: '<span class="available-dot">Live</span>',
+      badge: null,
+      featured: 80,
+      year: 2025,
+      summary: "Delivered 4 concurrent platform-wide migrations, including 500+ Discover users post-acquisition, a UK line of business (50+ teams), and a GitHub Enterprise to Cloud transition (across 11K+ users and 1K+ scheduled jobs), achieving zero downtime.",
+      composition: ['Platform Migration', 'Enterprise PM', 'GitHub Enterprise', 'Cross-functional'],
+      fit: 'Cross-functional, multi-team',
+      madeIn: 'New York',
+      material: 'Platform infrastructure',
+      stock: '',
+      imgHtml: MIGRATIONS_SVG,
+      care: 'The best platform work is the work users never have to think about. Reliability isn\'t a nice-to-have — it\'s the foundation everything else is built on. Before shipping anything new, ask whether your users are informed, prepared, and set up to stay compliant. New features are only as valuable as the trust that underlies them.',
+    },
+    {
+      id: 'workday',
+      name: 'The Workday Migration',
+      altLine: '6,000 fields+ of financial data',
+      cat: 'before', catLabel: 'Before / Archive',
+      role: 'APM · ERP Replacement · Capital One',
+      season: '2022 — 2024',
+      price: 'Archive',
+      badge: { label: 'Archive', cls: 'archive' },
+      featured: 70,
+      year: 2022,
+      summary: "Led data migration from Oracle to Workday inside a <strong>$150M ERP program</strong>. 6,000+ fields, two successful migration builds, one source-of-truth initiative. My first taste of enterprise-scale product work, and where I learned to love unglamorous problems.",
+      composition: ['Data Migration', 'Enterprise PM', 'Workday', 'Oracle', 'Source-of-Truth'],
+      fit: 'Large program team',
+      madeIn: 'McLean, VA · NYC',
+      material: 'ERP migration',
+      stock: 'Archived — successful',
+      imgHtml: WORKDAY_SVG,
+      care: 'Wears well in audit conversations. Re-tell as a story when relevant.',
+    },
+    {
+      id: 'gemini',
+      name: 'Gemini Exchange',
+      altLine: 'Credit-card offers & a year-in-review campaign',
+      cat: 'before', catLabel: 'Before / Internship',
+      role: 'PM &amp; SWE Intern · Gemini',
+      season: 'Summer 2022',
+      price: 'Archive',
+      badge: { label: 'Archive', cls: 'archive' },
+      featured: 50,
+      year: 2022,
+      summary: "Two hats: credit-card promotions and a year-in-review campaign on the PM side, then React frontend work on the Institutional team. Where I learned I could move between product and engineering depending on what the team needed.",
+      composition: ['Promotions', 'React', 'Frontend', 'Year-in-Review Campaign'],
+      fit: 'Internship pod',
+      madeIn: 'New York, NY',
+      material: 'Crypto fintech',
+      stock: 'Vintage',
+      imgHtml: GEMINI_SVG,
+      care: 'Wears well with engineers. Pair with hands-on coding.',
+    },
+    {
+      id: 'ms',
+      name: 'M.S. Computer Science',
+      altLine: 'Concentration in AI.',
+      cat: 'school', catLabel: 'School / Heirloom',
+      role: 'M.S. Computer Science, AI · Stanford',
+      season: '2023 — 2024',
+      price: 'Heirloom',
+      badge: null,
+      featured: 60,
+      year: 2024,
+      summary: "Stanford University. <strong>M.S. Computer Science</strong>, concentration in Artificial Intelligence. Coursework spanning ML systems, NLP, vision, and the slow uncomfortable beauty of writing proofs.",
+      composition: ['ML Systems', 'NLP', 'Vision', 'Proofs', 'Stanford'],
+      fit: 'Long, well-cut',
+      madeIn: 'Palo Alto, CA',
+      material: 'Two-year graduate program',
+      stock: 'Heirloom — keeps forever',
+      care: 'Read often. Argue with often.',
+    },
+    {
+      id: 'bs',
+      name: 'B.S. Symbolic Systems',
+      altLine: 'CS, neuroscience, and linguistics',
+      cat: 'school', catLabel: 'School / Heirloom',
+      role: 'B.S. Symbolic Systems · Stanford',
+      season: '2019 — 2023',
+      price: 'Heirloom',
+      badge: null,
+      featured: 58,
+      year: 2023,
+      summary: "Stanford's Symbolic Systems — a major built around the question of how minds (human and machine) represent the world. CS and neuroscience, taught side by side. The major that shaped how I think about every product I work on.",
+      composition: ['CS', 'Neuroscience', 'Linguistics', 'Philosophy of Mind'],
+      fit: 'Liberal-arts cut',
+      madeIn: 'Palo Alto, CA',
+      material: 'Four-year undergraduate',
+      stock: 'Heirloom',
+      care: 'Wear with curiosity. Pair with reading.',
+    },
+    {
+      id: 'vr',
+      name: 'Stanford Virtual Exchange VR',
+      altLine: 'Designing immersive public health curricula using VR',
+      cat: 'school', catLabel: 'School / Research',
+      role: 'Research · Stanford',
+      season: '2021 — 2023',
+      price: 'Research Edition',
+      badge: null,
+      featured: 55,
+      year: 2022,
+      summary: "Multi-year research on VR-mediated learning environments for refugee children. Field interviews, prototype builds, IRB paperwork. What it taught me about designing for people who don't look like the people in the room.",
+      composition: ['User Research', 'VR Prototyping', 'Field Work', 'IRB'],
+      fit: 'Small research team',
+      madeIn: 'Palo Alto, CA · Field sites',
+      material: 'Mixed-methods research',
+      stock: 'Limited research edition',
+      care: 'Carry the lessons. Cite the participants by name when you can.',
+    },
+    {
+      id: 'Aside',
+      name: 'Carot Gem',
+      altLine: 'Building my dream jewelry brand with my sisters',
+      cat: 'aside', catLabel: 'Carot Gem · Personal Projects',
+      role: 'Personal Projects',
+      season: 'Always',
+      price: 'Off-Duty',
+      badge: null,
+      featured: 40,
+      year: 2026,
+      summary: "Outside of work I build small things — design systems, half-finished essays, prototypes that don't always ship. Lately pairing with <em>Claude Code</em> on most of them. Curious about AI agents, taste-driven systems, and the unexpected overlap between fashion and software — both are about making things that fit a person well.",
+      composition: ['Python', 'C/C++', 'R', 'SQL', 'React', 'Figma', 'PyTorch', 'TensorFlow', 'Claude Code', 'Codex', 'Gemini'],
+      fit: 'Relaxed, slouchy',
+      madeIn: 'The weekend',
+      material: 'Personal projects',
+      stock: 'Always restocking',
+      care: 'Worn at home. Loved often.',
+    },
+  ];
+
+  // ─────────────────────────────────────────────────────────────
+  //  STATE
+  // ─────────────────────────────────────────────────────────────
+  const state = {
+    category: 'now',
+    sort: 'featured',
+    view: 'grid',
+    saved: new Set(), // ids
+  };
+
+  const grid = document.getElementById('grid');
+  const subnav = document.getElementById('subnav');
+  const visibleCount = document.getElementById('visible-count');
+
+  // ─── Render grid ─────────────────────────────────────────────
+  function cardHTML(p) {
+    const tone = p.cat;
+    const badges = [];
+    if (p.badge) badges.push(`<span class="badge ${p.badge.cls}">${p.badge.label}</span>`);
+    const primaryVisual = p.imgHtml
+      ? `<div class="card-scene">${p.imgHtml}</div>`
+      : `<div class="swatch" data-tone="${tone}"><span class="swatch-label">${p.catLabel}</span></div>`;
+    return `
+      <article class="card" data-id="${p.id}" data-cat="${p.cat}">
+        <div class="card-image">
+          <div class="card-badges">${badges.join('')}</div>
+          <button class="card-save ${state.saved.has(p.id) ? 'saved' : ''}" data-save="${p.id}" aria-label="Save">${state.saved.has(p.id) ? '♥' : '♡'}</button>
+          ${primaryVisual}
+          <div class="swatch alt" data-tone="alt">
+            <span class="swatch-label">${p.altLine}</span>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-row1">
+            <span class="card-name">${p.name}</span>
+            <span class="card-price">${p.price}</span>
+          </div>
+          <span class="card-meta">${p.season}<span class="sep">·</span>${p.material}</span>
+        </div>
+      </article>
+    `;
+  }
+
+  function render() {
+    let items = catalog.slice();
+
+    if (state.category !== 'all') {
+      items = items.filter(p => p.cat === state.category);
+    }
+    if (state.sort === 'featured')   items.sort((a,b) => b.featured - a.featured);
+    if (state.sort === 'newest')     items.sort((a,b) => b.year - a.year);
+    if (state.sort === 'oldest')     items.sort((a,b) => a.year - b.year);
+    if (state.sort === 'impact')     items.sort((a,b) => b.featured - a.featured); // proxy
+
+    grid.classList.toggle('view-list', state.view === 'list');
+    grid.innerHTML = items.map(cardHTML).join('');
+    if (visibleCount) visibleCount.textContent = items.length;
+  }
+
+  // ─── Category filter ─────────────────────────────────────────
+  subnav.addEventListener('click', e => {
+    const btn = e.target.closest('button[data-cat]');
+    if (!btn) return;
+    state.category = btn.dataset.cat;
+    subnav.querySelectorAll('button').forEach(b => b.classList.toggle('is-active', b === btn));
+    render();
+  });
+
+  // Sort
+  document.getElementById('sortby').addEventListener('change', e => {
+    state.sort = e.target.value;
+    render();
+  });
+
+  // View toggle
+  document.getElementById('view-toggle').addEventListener('click', e => {
+    const btn = e.target.closest('button[data-view]');
+    if (!btn) return;
+    state.view = btn.dataset.view;
+    document.querySelectorAll('#view-toggle button').forEach(b => b.classList.toggle('active', b === btn));
+    render();
+  });
+
+  // Footer category links
+  document.querySelectorAll('[data-cat-link]').forEach(a => {
+    a.addEventListener('click', () => {
+      state.category = a.dataset.catLink;
+      subnav.querySelectorAll('button').forEach(b => b.classList.toggle('is-active', b.dataset.cat === state.category));
+      render();
+    });
+  });
+
+  // ─── Grid click delegation ───────────────────────────────────
+  grid.addEventListener('click', e => {
+    const saveBtn = e.target.closest('[data-save]');
+    if (saveBtn) {
+      e.stopPropagation();
+      const id = saveBtn.dataset.save;
+      if (state.saved.has(id)) state.saved.delete(id);
+      else state.saved.add(id);
+      render();
+      return;
+    }
+    // drawer disabled — experiences not ready for launch
+  });
+
+  // ─── PDP Drawer ──────────────────────────────────────────────
+  const drawer = document.getElementById('drawer');
+  const drawerBackdrop = document.getElementById('drawer-backdrop');
+  const drawerScroll = document.getElementById('drawer-scroll');
+  const drawerCrumbs = document.getElementById('drawer-crumbs');
+  const drawerSave = document.getElementById('drawer-save');
+  let currentPiece = null;
+
+  function openDrawer(id) {
+    const p = catalog.find(x => x.id === id);
+    if (!p) return;
+    currentPiece = p;
+    drawerCrumbs.innerHTML = `Shop / ${p.catLabel.split(' / ')[0]} / <strong>${p.name}</strong>`;
+
+    const badge = p.badge ? `<div class="card-badges"><span class="badge ${p.badge.cls}">${p.badge.label}</span></div>` : '';
+
+    const drawerVisual = p.imgHtml
+      ? `<div class="card-scene">${p.imgHtml}</div>`
+      : `<div class="swatch" data-tone="${p.cat}"><span class="swatch-label">${p.catLabel}</span></div>`;
+    drawerScroll.innerHTML = `
+      <div class="drawer-image">
+        ${badge}
+        ${drawerVisual}
+      </div>
+      <div class="drawer-body">
+        <div class="drawer-eyebrow">${p.catLabel} · ${p.season}</div>
+        <h2 class="drawer-title">${p.name.replace(/^The /, 'The <em>').replace(/$/, '</em>')}</h2>
+        <div class="drawer-role">${p.role}</div>
+        <div class="drawer-price-row">
+          <span class="drawer-price">${p.price}</span>
+          <span class="drawer-stock">${p.stock}</span>
+        </div>
+        <p class="lede">${p.summary}</p>
+
+        <div class="spec-block">
+          <h4><span class="spec-sym">✿</span> Composition</h4>
+          <div class="composition-list">
+            ${p.composition.map(c => `<span class="comp-chip">${c}</span>`).join('')}
+          </div>
+        </div>
+        <div class="spec-block">
+          <h4><span class="spec-sym">✦</span> Specifications</h4>
+          <dl class="spec-grid">
+            <div><dt>Fit</dt><dd>${p.fit}</dd></div>
+            <div><dt>Material</dt><dd>${p.material}</dd></div>
+            <div><dt>Made in</dt><dd>${p.madeIn}</dd></div>
+            <div><dt>Season</dt><dd>${p.season}</dd></div>
+          </dl>
+        </div>
+        <div class="spec-block">
+          <h4><span class="spec-sym">♡</span> Care</h4>
+          <p class="care-text">${p.care}</p>
+        </div>
+      </div>
+    `;
+
+    // Save button state
+    drawerSave.innerHTML = state.saved.has(p.id) ? '♥ Saved' : '♡ Save';
+    drawerSave.classList.toggle('saved', state.saved.has(p.id));
+
+    drawer.classList.add('open');
+    drawerBackdrop.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    drawerBackdrop.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('drawer-close').addEventListener('click', closeDrawer);
+  drawerBackdrop.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  drawerSave.addEventListener('click', () => {
+    if (!currentPiece) return;
+    const id = currentPiece.id;
+    if (state.saved.has(id)) state.saved.delete(id);
+    else state.saved.add(id);
+    drawerSave.innerHTML = state.saved.has(id) ? '♥ Saved' : '♡ Save';
+    drawerSave.classList.toggle('saved', state.saved.has(id));
+    render();
+  });
+
+
+  // ─── Toast ───────────────────────────────────────────────────
+  const toast = document.getElementById('toast');
+  let toastTimer = null;
+  function showToast(msg) {
+    toast.innerHTML = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+  }
+
+  // ─── Init ────────────────────────────────────────────────────
+  render();
+  updateBagCount();
+</script>
+
+</body>
+</html>
