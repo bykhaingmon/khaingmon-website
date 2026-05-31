@@ -435,10 +435,11 @@
 
     .card {
       position: relative;
-      cursor: default;
+      cursor: pointer;
       transition: opacity 0.3s;
     }
     .card.is-hidden { display: none; }
+    .card.is-coming-soon { cursor: default; opacity: 0.7; }
 
     .card-image {
       position: relative;
@@ -1487,6 +1488,17 @@
   <image href="gem-final.png" x="20" y="60" width="360" height="380" preserveAspectRatio="xMidYMid meet"/>
 </svg>`;
 
+  const SCHOOL_SVG = (file) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" style="width:100%;height:100%;display:block;">
+  <defs>
+    <pattern id="sc-stripe-${file}" patternUnits="userSpaceOnUse" width="56" height="56" patternTransform="rotate(45)">
+      <rect width="28" height="56" fill="#4A6E88"/>
+      <rect x="28" width="28" height="56" fill="#3d5c74"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="500" fill="url(#sc-stripe-${file})"/>
+  <image href="${file}" x="20" y="60" width="360" height="380" preserveAspectRatio="xMidYMid meet"/>
+</svg>`;
+
   // ─────────────────────────────────────────────────────────────
   //  THE CATALOG
   // ─────────────────────────────────────────────────────────────
@@ -1549,7 +1561,7 @@
       material: 'Platform infrastructure',
       stock: '',
       imgHtml: MIGRATIONS_SVG,
-      care: 'The best platform work is the work users never have to think about. Reliability isn\'t a nice-to-have — it\'s the foundation everything else is built on. Before shipping anything new, ask whether your users are informed, prepared, and set up to stay compliant. New features are only as valuable as the trust that underlies them.',
+      care: 'The best platform work is the work users never have to think about. Reliability isn\'t a nice-to-have — it\'s the foundation everything else is built on.',
     },
     {
       id: 'workday',
@@ -1557,45 +1569,45 @@
       altLine: '6,000 fields+ of financial data',
       cat: 'before', catLabel: 'Before / Archive',
       role: 'APM · ERP Replacement · Capital One',
-      season: '2022 — 2024',
+      season: '2024 — 2025',
       price: 'Archive',
       badge: { label: 'Archive', cls: 'archive' },
       featured: 70,
-      year: 2022,
-      summary: "Led data migration from Oracle to Workday inside a <strong>$150M ERP program</strong>. 6,000+ fields, two successful migration builds, one source-of-truth initiative. My first taste of enterprise-scale product work, and where I learned to love unglamorous problems.",
-      composition: ['Data Migration', 'Enterprise PM', 'Workday', 'Oracle', 'Source-of-Truth'],
-      fit: 'Large program team',
-      madeIn: 'McLean, VA · NYC',
+      year: 2024-2025,
+      summary: "Owned the Conversion workstream inside a $150M ERP replacement migrating 100% of in-scope historical program data into Workday on time — coordinating 14 stakeholders across engineering, finance, and risk through three build and test cycles. Led end-to-end delivery of a net-new ETL pipeline that moved 1.2M historical asset and supplier records into Workday, with post-migration data quality exceeding source-system baselines and unblocking end-to-end testing for 24 cross-functional teams.",
+      composition: ['Data Migration', 'Enterprise PM', 'Workday', 'Oracle', 'ETL'],
+      fit: 'Finance Product, 6 engineers',
+      madeIn: 'McLean, VA',
       material: 'ERP migration',
-      stock: 'Archived — successful',
+      stock: 'Archived',
       imgHtml: WORKDAY_SVG,
-      care: 'Wears well in audit conversations. Re-tell as a story when relevant.',
+      care: 'Pay extra care to moving financial data — the stakes are high and the work is complex. Document and test thoroughly. ',
     },
     {
       id: 'gemini',
       name: 'Gemini Exchange',
-      altLine: 'Credit-card offers & a year-in-review campaign',
+      altLine: 'Credit-card offers for crypto users',
       cat: 'before', catLabel: 'Before / Internship',
       role: 'PM &amp; SWE Intern · Gemini',
-      season: 'Summer 2022',
+      season: 'Summer 2022 & Summer 2023',
       price: 'Archive',
       badge: { label: 'Archive', cls: 'archive' },
       featured: 50,
-      year: 2022,
-      summary: "Two hats: credit-card promotions and a year-in-review campaign on the PM side, then React frontend work on the Institutional team. Where I learned I could move between product and engineering depending on what the team needed.",
-      composition: ['Promotions', 'React', 'Frontend', 'Year-in-Review Campaign'],
-      fit: 'Internship pod',
+      year: 2022 & 2023,
+      summary: "Launched Gemini's first targeted pre-qualification offer, segmenting prospective users to identify the optimal audience and coordinating engineering, legal, and marketing. Evaluated 8 promotional strategies through ROI modeling, with multiple recommendations adopted into the Q4 2023 roadmap. Also championed a year-in-review campaign for the Gemini Credit Card — synthesizing a 10-page PR/FAQ covering market research, KPI definitions, and cost analysis to drive acquisition and surface product improvements.",
+      composition: ['React', 'Frontend', 'Customer Segmentation','ROI Analysis'],
+      fit: 'Internship',
       madeIn: 'New York, NY',
-      material: 'Crypto fintech',
-      stock: 'Vintage',
+      material: 'Crypto',
+      stock: 'Archived',
       imgHtml: GEMINI_SVG,
-      care: 'Wears well with engineers. Pair with hands-on coding.',
+      care: 'ROI analysis and customer segmentation should come before anything else. Before you build a campaign or a feature, you need to know your market — who your users are, what they actually want, and what your competitors are already doing.',
     },
     {
       id: 'ms',
       name: 'M.S. Computer Science',
       altLine: 'Concentration in AI.',
-      cat: 'school', catLabel: 'School / Heirloom',
+      cat: 'school', catLabel: 'Education',
       role: 'M.S. Computer Science, AI · Stanford',
       season: '2023 — 2024',
       price: 'Heirloom',
@@ -1603,18 +1615,19 @@
       featured: 60,
       year: 2024,
       summary: "Stanford University. <strong>M.S. Computer Science</strong>, concentration in Artificial Intelligence. Coursework spanning ML systems, NLP, vision, and the slow uncomfortable beauty of writing proofs.",
-      composition: ['ML Systems', 'NLP', 'Vision', 'Proofs', 'Stanford'],
-      fit: 'Long, well-cut',
-      madeIn: 'Palo Alto, CA',
-      material: 'Two-year graduate program',
-      stock: 'Heirloom — keeps forever',
-      care: 'Read often. Argue with often.',
+      composition: ['ML Systems', 'NLP', 'Computer Vision', 'Theoretical CS'],
+      fit: 'Masters program',
+      madeIn: 'Stanford, CA',
+      material: 'Graduate program',
+      stock: 'Heirloom',
+      care: 'Studying NLP, computer vision, and the fundamentals of how machine learning systems are actually built gave me a different kind of fluency — not just what AI can do, but how it works and where it breaks.',
+      imgHtml: SCHOOL_SVG('stanford-final.png'),
     },
     {
       id: 'bs',
       name: 'B.S. Symbolic Systems',
       altLine: 'CS, neuroscience, and linguistics',
-      cat: 'school', catLabel: 'School / Heirloom',
+      cat: 'school', catLabel: 'Education',
       role: 'B.S. Symbolic Systems · Stanford',
       season: '2019 — 2023',
       price: 'Heirloom',
@@ -1623,11 +1636,12 @@
       year: 2023,
       summary: "Stanford's Symbolic Systems — a major built around the question of how minds (human and machine) represent the world. CS and neuroscience, taught side by side. The major that shaped how I think about every product I work on.",
       composition: ['CS', 'Neuroscience', 'Linguistics', 'Philosophy of Mind'],
-      fit: 'Liberal-arts cut',
-      madeIn: 'Palo Alto, CA',
-      material: 'Four-year undergraduate',
+      fit: 'Interdisciplinary major',
+      madeIn: 'Stanford, CA',
+      material: 'Undergraduate Program',
       stock: 'Heirloom',
-      care: 'Wear with curiosity. Pair with reading.',
+      care: 'Symbolic Systems is the major that taught me to embrace being interdisciplinary — that the most interesting questions live at the intersection of fields, not inside any one of them. Studying how CS, neuroscience, linguistics, and philosophy all speak to the same underlying questions about minds and meaning gave me a framework I bring to everything. It is ultimately a major about reimagining humanity and technology together: how human intelligence works, and how artificial intelligence can reflect, extend, or challenge it.',
+      imgHtml: SCHOOL_SVG('symsys.png'),
     },
     {
       id: 'vr',
@@ -1640,13 +1654,14 @@
       badge: null,
       featured: 55,
       year: 2022,
-      summary: "Multi-year research on VR-mediated learning environments for refugee children. Field interviews, prototype builds, IRB paperwork. What it taught me about designing for people who don't look like the people in the room.",
-      composition: ['User Research', 'VR Prototyping', 'Field Work', 'IRB'],
+      summary: "Designed a VR-integrated Refugee Crisis curriculum across the University of Lebanon and Emory University for public health education — built to help students around the world learn more deeply and immersively about the real sites and communities they study. Led user testing cycles for the VR prototype, generating feedback that directly shaped the first software build.",
+      composition: ['User Research', 'VR Prototyping', 'Curriculum Design', 'Public Health'],
       fit: 'Small research team',
-      madeIn: 'Palo Alto, CA · Field sites',
-      material: 'Mixed-methods research',
-      stock: 'Limited research edition',
-      care: 'Carry the lessons. Cite the participants by name when you can.',
+      madeIn: 'Stanford, CA',
+      material: 'Education Research',
+      stock: 'Research Edition',
+      care: 'Immersion is a vehicle for understanding. There are concepts in a classroom that words and slides can only get you so far with — but placing someone inside the environment they are studying changes how they absorb it.',
+      imgHtml: SCHOOL_SVG('vr.png'),
     },
     {
       id: 'Aside',
@@ -1655,8 +1670,9 @@
       cat: 'aside', catLabel: 'Carot Gem · Personal Projects',
       role: 'Personal Projects',
       season: 'Always',
-      price: 'Off-Duty',
-      badge: null,
+      price: 'Coming Soon',
+      badge: { label: 'Coming Soon', cls: 'archive' },
+      comingSoon: true,
       featured: 40,
       year: 2026,
       summary: "Outside of work I build small things — design systems, half-finished essays, prototypes that don't always ship. Lately pairing with <em>Claude Code</em> on most of them. Curious about AI agents, taste-driven systems, and the unexpected overlap between fashion and software — both are about making things that fit a person well.",
@@ -1692,7 +1708,7 @@
       ? `<div class="card-scene">${p.imgHtml}</div>`
       : `<div class="swatch" data-tone="${tone}"><span class="swatch-label">${p.catLabel}</span></div>`;
     return `
-      <article class="card" data-id="${p.id}" data-cat="${p.cat}">
+      <article class="card${p.comingSoon ? ' is-coming-soon' : ''}" data-id="${p.id}" data-cat="${p.cat}" ${p.comingSoon ? 'data-coming-soon="true"' : ''}>
         <div class="card-image">
           <div class="card-badges">${badges.join('')}</div>
           <button class="card-save ${state.saved.has(p.id) ? 'saved' : ''}" data-save="${p.id}" aria-label="Save">${state.saved.has(p.id) ? '♥' : '♡'}</button>
@@ -1772,7 +1788,8 @@
       render();
       return;
     }
-    // drawer disabled — experiences not ready for launch
+    const card = e.target.closest('.card');
+    if (card && !card.dataset.comingSoon) openDrawer(card.dataset.id);
   });
 
   // ─── PDP Drawer ──────────────────────────────────────────────
